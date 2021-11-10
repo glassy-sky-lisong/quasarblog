@@ -84,6 +84,6 @@ module.exports = {
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/no-unused-components'
+    'vue/no-unused-components': 0
   }
 }

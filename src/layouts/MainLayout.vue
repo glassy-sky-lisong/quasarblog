@@ -1,21 +1,53 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="text-black header">
       <q-toolbar>
 
         <q-toolbar-title>
+          <q-avatar>
+            <q-img
+            src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
+          />
+          </q-avatar>
           Quasar App
         </q-toolbar-title>
+
         <q-space />
-        <div class="row q-pa-md full-height">
-          <q-btn
-            label="主页"
-            stretch
-            flat
-            v-ripple
-          >
-          </q-btn>
-        </div>
+
+        <q-btn
+          label="主页"
+          stretch
+          flat
+          type="a"
+          class="text-weight-bold"
+          v-ripple
+          to="/"
+        >
+        </q-btn>
+        <q-btn-dropdown
+          label="分类"
+          flat
+          stretch
+          class="text-weight-bold"
+          v-model="categoryFlag"
+        >
+          <q-list>
+            <q-item clickable v-for="i of [1, 2, 3, 4]" :key="i" >
+              <q-item-section>
+                <q-item-label>分类-{{ i }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+        <q-btn
+          flat
+          stretch
+          class="text-weight-bold"
+          type="a"
+          to="/article"
+          label="文章页"
+        >
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -23,60 +55,22 @@
       <router-view />
     </q-page-container>
 
-    <q-footer>
-
-      footer
+    <q-footer elevated reveal class="bg-grey-2 q-pa-md" >
+      <div class="row justify-center q-mb-md q-gutter-md text-white">
+        <q-btn round icon="fab fa-github" type="a" href="https://www.github.io" target="_black" color="primary" />
+        <q-btn round icon="fab fa-twitter" type="a" href="https://www.github.io" target="_black" color="primary" />
+        <q-btn round icon="fab fa-qq" type="a" href="https://www.github.io" target="_black" color="primary" />
+        <q-btn round icon="fab fa-facebook-square" type="a" href="https://www.github.io" target="_black" color="primary" />
+      </div>
+      <div class="row justify-center text-primary" >
+        123
+      </div>
     </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
 
 import { defineComponent, ref } from 'vue'
 
@@ -88,20 +82,17 @@ export default defineComponent({
   },
 
   setup () {
-    const leftDrawerOpen = ref(false)
-
+    const categoryFlag = ref(false)
     return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      categoryFlag
     }
   }
 })
 </script>
 
 <style scoped>
-  .q-header {
+  .header {
+    background-color: rgba(0, 0, 0, .12);
+    backdrop-filter: blur(7px);
   }
 </style>
