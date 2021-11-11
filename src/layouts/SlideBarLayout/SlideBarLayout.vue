@@ -1,7 +1,9 @@
 <template>
   <q-page padding class="row q-pt-xl justify-evenly">
     <slide-bar class="col-3 bg-grey-7" />
-    <div class="col-7 bg-grey-7" >right</div>
+    <div class="col-7 bg-grey-7" >
+      <router-view></router-view>
+    </div>
   </q-page>
 </template>
 
