@@ -55,15 +55,17 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated reveal class="bg-grey-2 q-pa-md" >
-      <div class="row justify-center q-mb-md q-gutter-md text-white">
+    <q-footer elevated reveal class="bg-grey-2 q-pa-md" style="position: relative;" >
+      <div class="row justify-center q-mb-md q-mt-xs q-gutter-md text-white">
         <q-btn round icon="fab fa-github" type="a" href="https://www.github.io" target="_black" color="primary" />
         <q-btn round icon="fab fa-twitter" type="a" href="https://www.github.io" target="_black" color="primary" />
         <q-btn round icon="fab fa-qq" type="a" href="https://www.github.io" target="_black" color="primary" />
         <q-btn round icon="fab fa-facebook-square" type="a" href="https://www.github.io" target="_black" color="primary" />
       </div>
-      <div class="row justify-center text-primary" >
-        123
+      <div class="row justify-center text-primary q-pt-sm" >
+        <a href="#" class="doc-link q-mx-md" target="_black" >MIT LICENSE </a> |
+        <a href="#" class="doc-link q-mx-md" target="_black" >隐私政策 </a> |
+        <a href="#" class="doc-link q-mx-md" target="_black" >Quasar艺术作品 </a>
       </div>
     </q-footer>
   </q-layout>
@@ -94,5 +96,16 @@ export default defineComponent({
   .header {
     background-color: rgba(0, 0, 0, .12);
     backdrop-filter: blur(7px);
+  }
+
+  .doc-link {
+    color: #00b4ff;
+    font-weight: 500;
+    text-decoration: none;
+    outline: 0;
+    border-bottom: 1px dotted currentColor;
+    vertical-align: middle;
+    transition: opacity 0.2s;
+    white-space: nowrap;
   }
 </style>
