@@ -2,3 +2,7 @@
 vscode:
   extensions:
     - octref.vetur
+
+ports:
+  - port: 8080
+    visibility: private
