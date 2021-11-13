@@ -15,6 +15,7 @@
               style="width: 90%;"
             >
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugiat odio rem minus aliquam? Explicabo illo, eligendi quas ipsa facilis consectetur vel libero impedit perspiciatis excepturi doloremque ullam iusto enim.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quae maxime accusamus reprehenderit aut pariatur vero possimus corporis adipisci deserunt labore, excepturi perferendis ab impedit consectetur fuga, velit atque minima?
             </div>
             <div class="q-mt-sm">
               <q-chip icon="bookmark" size="xs" >Bookmark</q-chip>
