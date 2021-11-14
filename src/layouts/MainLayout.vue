@@ -81,7 +81,7 @@
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, nextTick, getCurrentInstance } from 'vue'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -94,11 +94,22 @@ export default defineComponent({
     const categoryFlag = ref(false)
     const headerRef = ref(null)
     const bgRef = ref(null)
+    const { proxy } = getCurrentInstance()
     return {
       categoryFlag,
       layoutScroll (details: Record<string, unknown>) {
         if(bgRef.value && headerRef.value) {
-          console.log(details.position, headerRef.value, bgRef.value)
+          void nextTick(() => {
+            console.log(proxy)
+            let offset = details.position
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            let rowH = bgRef.value.getBoundingClientRect().height
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            let headerLayout = document.getElementsByClassName('q-layout__shadow')[0]
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+            console.log(headerLayout, offset, rowH)
+          })
         }
       },
       headerRef,
