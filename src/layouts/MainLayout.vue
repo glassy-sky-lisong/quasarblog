@@ -93,31 +93,30 @@ export default defineComponent({
 
   setup () {
     const categoryFlag = ref(false)
-    const headerRef = ref(null)
-    const bgRef = ref(null)
+    const bgRef = ref<HTMLElement | null>(null)
     return {
       categoryFlag,
-      layoutScroll (details: Record<string, unknown>) {
-        if(bgRef.value && headerRef.value) {
+      layoutScroll (details: Record<string, any>) {
+        if(bgRef.value) {
           void nextTick(() => {
-            console.log(proxy)
             let offset = details.position
 
-            let rowH = bgRef.value.getBoundingClientRect().height
+            let rowH = bgRef.value ? bgRef.value.getBoundingClientRect().height : 0
             let headerLayout = document.getElementsByClassName('q-layout__shadow')[0]
+            let headerDom = document.querySelector('.header')
             console.log(headerLayout, offset, rowH)
             if(offset >= rowH - 50) {
               console.log('333333333')
-              headerLayout.classList.add('glassy')
+              headerDom && headerDom.classList.add('glassy')
             } else if (offset > 0) {
               console.log('222222')
+              headerDom && headerDom.classList.contains('glassy') && headerDom.classList.remove('glassy')
             } else {
               console.log('1111111111')
             }
           })
         }
       },
-      headerRef,
       bgRef
     }
   }
@@ -141,7 +140,11 @@ export default defineComponent({
     white-space: nowrap;
   }
 
-  .glassy::after {
-    background-color: transparent;
+
+</style>
+
+<style>
+ .glassy {
+    background-color: transparent !important;
   }
 </style>
