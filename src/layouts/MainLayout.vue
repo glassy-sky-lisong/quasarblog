@@ -93,7 +93,7 @@ export default defineComponent({
 
   setup () {
     const categoryFlag = ref(false)
-    const headerRef = ref<>(null)
+    const headerRef = ref(null)
     const bgRef = ref(null)
     return {
       categoryFlag,
