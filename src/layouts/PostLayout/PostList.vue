@@ -17,12 +17,13 @@ export default defineComponent({
 .posts::-webkit-scrollbar {
   width: 4px;
   border-radius: 9px;
-  background-color: rgb(2, 123, 227, .2);
+  background-color: transparent;
   opacity: 0.2;
 }
 .posts::-webkit-scrollbar-thumb {
   width: 4px;
   border-radius: 9px;
+  background-color: transparent;
 }
 
 </style>

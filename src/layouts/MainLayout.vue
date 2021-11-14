@@ -1,13 +1,13 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" @scroll="layoutScroll" >
     <q-header elevated class="text-black header">
-      <q-toolbar>
+      <q-toolbar inset ref="headerRef" >
 
         <q-toolbar-title>
           <q-avatar>
             <q-img
-            src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
-          />
+              src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
+            />
           </q-avatar>
           Quasar App
         </q-toolbar-title>
@@ -52,6 +52,13 @@
     </q-header>
 
     <q-page-container>
+      <div class="row" ref="bgRef" style="margin-top: -50px;min-height: 350px" >
+        <q-img
+          src="https://cdn.quasar.dev/img/mountains.jpg"
+          style="height: 100vh;width: 100vw;"
+          contain
+        />
+      </div>
       <router-view />
     </q-page-container>
 
@@ -85,8 +92,17 @@ export default defineComponent({
 
   setup () {
     const categoryFlag = ref(false)
+    const headerRef = ref(null)
+    const bgRef = ref(null)
     return {
-      categoryFlag
+      categoryFlag,
+      layoutScroll (details: Record<string, unknown>) {
+        if(bgRef.value && headerRef.value) {
+          console.log(details.position, headerRef.value, bgRef.value)
+        }
+      },
+      headerRef,
+      bgRef
     }
   }
 })
