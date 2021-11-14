@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 <template>
   <q-layout view="lHh Lpr lFf" @scroll="layoutScroll" >
     <q-header elevated class="text-black header">
@@ -92,9 +93,8 @@ export default defineComponent({
 
   setup () {
     const categoryFlag = ref(false)
-    const headerRef = ref(null)
+    const headerRef = ref<>(null)
     const bgRef = ref(null)
-    const { proxy } = getCurrentInstance()
     return {
       categoryFlag,
       layoutScroll (details: Record<string, unknown>) {
@@ -102,13 +102,18 @@ export default defineComponent({
           void nextTick(() => {
             console.log(proxy)
             let offset = details.position
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
             let rowH = bgRef.value.getBoundingClientRect().height
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             let headerLayout = document.getElementsByClassName('q-layout__shadow')[0]
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             console.log(headerLayout, offset, rowH)
+            if(offset >= rowH - 50) {
+              console.log('333333333')
+              headerLayout.classList.add('glassy')
+            } else if (offset > 0) {
+              console.log('222222')
+            } else {
+              console.log('1111111111')
+            }
           })
         }
       },
@@ -134,5 +139,9 @@ export default defineComponent({
     vertical-align: middle;
     transition: opacity 0.2s;
     white-space: nowrap;
+  }
+
+  .glassy::after {
+    background-color: transparent;
   }
 </style>
