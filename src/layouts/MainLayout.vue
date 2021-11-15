@@ -82,7 +82,7 @@
 <script lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 
-import { defineComponent, ref, nextTick, getCurrentInstance } from 'vue'
+import { defineComponent, ref, nextTick, onMounted } from 'vue'
 
 export default defineComponent({
   name: 'MainLayout',
@@ -94,6 +94,16 @@ export default defineComponent({
   setup () {
     const categoryFlag = ref(false)
     const bgRef = ref<HTMLElement | null>(null)
+    const ajaxBar = ref(null)
+
+    onMounted(() => {
+      let headerLayout = document.getElementsByClassName('q-layout__shadow')[0]
+      let headerDom = document.querySelector('.header')
+
+       headerDom && headerDom.classList.add('glassy')
+       headerLayout && headerLayout.classList.add('no-shadow')
+    })
+
     return {
       categoryFlag,
       layoutScroll (details: Record<string, any>) {
@@ -107,17 +117,20 @@ export default defineComponent({
             console.log(headerLayout, offset, rowH)
             if(offset >= rowH - 50) {
               console.log('333333333')
-              headerDom && headerDom.classList.add('glassy')
+              // headerDom && headerDom.classList.add('glassy')
             } else if (offset > 0) {
               console.log('222222')
               headerDom && headerDom.classList.contains('glassy') && headerDom.classList.remove('glassy')
+              headerLayout && headerLayout.classList.contains('no-shadow') && headerLayout.classList.remove('no-shadow')
             } else {
               console.log('1111111111')
+              headerDom && headerDom.classList.add('glassy')
+              headerLayout && headerLayout.classList.add('no-shadow')
             }
           })
         }
       },
-      bgRef
+      bgRef,
     }
   }
 })
@@ -146,5 +159,10 @@ export default defineComponent({
 <style>
  .glassy {
     background-color: transparent !important;
+    backdrop-filter: none !important;
+  }
+
+  .no-shadow::after {
+    box-shadow: none;
   }
 </style>

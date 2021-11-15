@@ -1,19 +1,8 @@
 <template>
-  <div class="demo" style="">
-    <q-infinite-scroll
-      @load="onLoad"
-      :offset="250"
-      scroll-target=".demo"
-    >
-      <div v-for="(item, index) in items" :key="index" class="caption" >
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas atque rerum eaque, reiciendis corporis recusandae eveniet provident doloremque. Vero sit asperiores impedit magnam porro aut nostrum quos aliquid similique deleniti?</p>
-      </div>
-      <template v-slot:loading>
-        <div class="row justify-center q-my-md">
-          <q-spinner-dots color="primary" size="40px" />
-        </div>
-      </template>
-    </q-infinite-scroll>
+  <div class="demo" >
+    <q-btn 
+      label="Trigger"
+    />
 
   </div>
 </template>
@@ -36,7 +25,7 @@ export default defineComponent({
             done()
           }
         }, 2000)
-      }
+      },
     }
   }
 })
