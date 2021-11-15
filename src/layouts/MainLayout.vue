@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 <template>
   <q-layout view="lHh Lpr lFf" @scroll="layoutScroll" >
+    <q-ajax-bar
+      ref="ajaxBar"
+      position="top"
+      color="primary"
+      size="2px"
+      skip-hijack
+    />
     <q-header elevated class="text-black header">
       <q-toolbar inset ref="headerRef" >
 
@@ -49,6 +56,14 @@
           label="文章页"
         >
         </q-btn>
+        <q-btn
+          flat
+          stretch
+          class="text-weight-bold"
+          type="a"
+          label="文章详情"
+          :to="{ name: 'articlelayout' }"
+        ></q-btn>
       </q-toolbar>
     </q-header>
 
@@ -96,6 +111,10 @@ export default defineComponent({
     const bgRef = ref<HTMLElement | null>(null)
     const ajaxBar = ref(null)
 
+    const ajaxtrigger = () => {
+      console.log('ajax trigger')
+    }
+
     onMounted(() => {
       let headerLayout = document.getElementsByClassName('q-layout__shadow')[0]
       let headerDom = document.querySelector('.header')
@@ -131,6 +150,8 @@ export default defineComponent({
         }
       },
       bgRef,
+      ajaxBar,
+      ajaxtrigger
     }
   }
 })

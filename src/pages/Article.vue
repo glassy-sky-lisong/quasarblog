@@ -1,7 +1,8 @@
 <template>
   <div class="demo" >
-    <q-btn 
+    <q-btn
       label="Trigger"
+      @click="$emit('ajaxtrigger')"
     />
 
   </div>

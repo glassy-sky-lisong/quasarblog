@@ -18,6 +18,11 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/Article.vue')
           }
         ]
+      },
+      {
+        path: '/article',
+        component: () => import('layouts/ArticleLayout/ArticleLayout.vue'),
+        name: 'articlelayout'
       }
     ],
   },
