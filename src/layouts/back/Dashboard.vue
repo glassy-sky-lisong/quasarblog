@@ -1,11 +1,11 @@
 <template>
-  article layout
+    Dashboard
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-    name: 'ArticleLayout',
+  name: 'Dashboard',
 })
 </script>
