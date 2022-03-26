@@ -93,6 +93,10 @@ module.exports = {
     'vue/no-side-effects-in-computed-properties': 'off',
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/no-unused-components': 0
+    'vue/no-unused-components': 0,
+    '@typescript-eslint/no-unused-vars': 0,
+    '@typescript-eslint/no-unsafe-assignment': 0,
+    '@typescript-eslint/no-unsafe-call': 0,
+    '@typescript-eslint/no-unsafe-member-access': 0
   }
 }
