@@ -6,6 +6,10 @@ import {
   useStore as vuexUseStore,
 } from 'vuex'
 
+import { axios } from 'src/boot/axios'
+import { UserProp } from '../layouts/user';
+import { PostProp } from '../layouts/post';
+
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -22,7 +26,7 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown
+  isLogin: boolean
 }
 
 // provide typings for `this.$store`
@@ -40,7 +44,82 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       // example
     },
+    state: {
+      isLogin: false
+    },
+    mutations: {
+      setIsLogin(state, value: boolean) {
+        state.isLogin = value
+      }
+    },
+    actions: {
+      autoLogin({ commit }, options: { username: string; password: string; 'remember': '0' | '1'; }): Promise<UserProp | null> {
+        const { username, password, remember } = options
+        const formData = new FormData()
+        formData.set('username', username)
+        formData.set('password', password)
+        formData.set('remember-me', remember);
 
+        return new Promise((resolve, reject) => {
+          axios.post('/api/login', formData).then(
+            res => {
+              if(res.data && res.data.username === username) {
+                commit('setIsLogin', true)
+                resolve(res.data)
+              } else {
+                resolve(null)
+              }
+            }
+          ).catch( err => reject(err) )
+        })
+      },
+      fetchCurrentUser({ state, dispatch }): Promise<UserProp | null> {
+        return new Promise((resolve, reject) => {
+          if (state.isLogin) {
+            axios.get('/api/user/current-user').then(
+              res => {
+                if (res.data.data && res.data.data.username) {
+                  resolve(res.data.data)
+                } else {
+                  resolve(null)
+                }
+              }
+            ).catch(err => reject(err))
+          } else {
+              void dispatch('autoLogin', {
+                username: 'admin',
+                password: '950714ls',
+                remember: '0'
+              }).then(
+                res => {
+                  if (res) {
+                    axios.get('/api/user/current-user').then(
+                      res => {
+                        if (res.data.data && res.data.data.username) {
+                          resolve(res.data.data)
+                        } else {
+                          resolve(null)
+                        }
+                      }
+                    ).catch(err => reject(err))
+                  } else {
+                    reject('can not login')
+                  }
+                }
+              ).catch(err => reject(err))
+          }
+        })
+      },
+      fetchArticleList({}): Promise<PostProp[] | null> {
+        return new Promise((resolve, reject) => {
+          axios.get('/api/article/all').then(
+            res => {
+              resolve(res.data.data)
+            }
+          ).catch(err => reject(err))
+        })
+      }
+    },
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
     strict: !!process.env.DEBUGGING

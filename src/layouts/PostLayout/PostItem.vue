@@ -4,7 +4,7 @@
         <q-card-section horizontal >
           <div class="col-4 border-p overflow-hidden">
             <q-img
-            src="https://cdn.quasar.dev/img/mountains.jpg"
+            :src="post ? post.avatar : 'https://cdn.quasar.dev/img/mountains.jpg'"
             class="fit"
             />
           </div>
@@ -13,18 +13,15 @@
               class="text-h5 text-center title-hidden q-mx-auto"
               style="width: 90%;"
             >
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus fugiat odio rem minus aliquam? Explicabo illo, eligendi quas ipsa facilis consectetur vel libero impedit perspiciatis excepturi doloremque ullam iusto enim.
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quae maxime accusamus reprehenderit aut pariatur vero possimus corporis adipisci deserunt labore, excepturi perferendis ab impedit consectetur fuga, velit atque minima?
+              {{ post ? post.articleName : '' }}
             </div>
-            <div class="q-mt-sm">
-              <q-chip icon="bookmark" size="xs" >Bookmark</q-chip>
-              <q-chip icon="bookmark" size="xs" >Bookmark</q-chip>
-              <q-chip icon="bookmark" size="xs" >Bookmark</q-chip>
-              <q-chip icon="bookmark" size="xs" >Bookmark</q-chip>
-            </div>
+            <template v-if='categories.length > 0'>
+              <div class="q-mt-sm">
+                <q-chip icon="bookmark" size="xs" v-for='(item, index) in categories' :key='index' >{{ item }}</q-chip>
+              </div>
+            </template>
             <p class="q-mt-xs text-hidden">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem praesentium dolorem omnis ex, atque dicta obcaecati modi sequi optio inventore! Saepe quidem repellendus recusandae incidunt reprehenderit accusamus molestias ea repudiandae.
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic quam minima quod debitis dolore et repellat maiores amet inventore nesciunt placeat dolorem fugit doloribus laudantium, dolores eum. Alias, eos fuga.
+              {{ post ? post.description : '' }}
             </p>
             <q-card-section class="row justify-end q-py-none">
               <q-btn
@@ -33,7 +30,7 @@
                 color="primary"
                 label="Click me"
                 type="a"
-                to="/"
+                to="/article"
               >
 
               </q-btn>
@@ -45,9 +42,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent,PropType, computed } from 'vue'
+import { PostProp } from '../post';
+
 export default defineComponent({
-  name: 'PostItem'
+  name: 'PostItem',
+  props: {
+    post: {
+      type: Object as PropType<PostProp>,
+      default: () => null,
+      required: true
+    }
+  },
+  setup(props) {
+    const categories = computed(() => (props.post && props.post.category && props.post.category != '') ? props.post.category.split(',') : [] )
+
+    return {
+      categories
+    }
+  }
 })
 </script>
 
