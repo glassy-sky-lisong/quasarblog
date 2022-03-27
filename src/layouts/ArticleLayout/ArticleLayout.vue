@@ -1,11 +1,11 @@
 <template>
-  <q-page class='row justify-around'>
+  <q-page padding class='row justify-around q-mt-xl q-pt-xl'>
     <div class='col-md-8'>
       <q-card class='q-mt-lg'>
         <q-card-section>
-          <h2 class='text-center'>Hello,World</h2>
+          <h3 class='text-center'>{{ article.articleName }}</h3>
 
-          <div id='md-content'>
+          <div id='md-content' style='min-height: 500px;'>
             <v-md-editor v-model="text" height="100%" mode='preview' ref='mdRef' ></v-md-editor>
           </div>
         </q-card-section>
@@ -14,7 +14,7 @@
     <div class='col-md-3'>
       <profile-card class='q-mt-lg'></profile-card>
       <toc-bar class='q-mt-lg' style='position: sticky; top: 100px;'>
-        <ul class='md-toc'>
+        <ul class='md-toc' v-if='titles.length > 0'>
           <li
             v-for="(anchor, inx) in titles"
             :key='inx'
@@ -24,6 +24,9 @@
             <a style="cursor: pointer">{{ anchor.title }}</a>
           </li>
         </ul>
+        <div style='text-align: center;padding: 10px 0px;color: gray;' v-else>
+          没有标题
+        </div>
       </toc-bar>
     </div>
   </q-page>
@@ -31,13 +34,15 @@
 <script>
 import ProfileCard from '../SlideBarLayout/ProfleCard.vue';
 import TocBar from '../SlideBarLayout/TocBar.vue';
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue';
+import { useStore } from 'src/store'
+import { useRoute } from 'vue-router'
 
 export default {
   components: { TocBar, ProfileCard },
   data() {
     return {
-      titles: []
+      titles: [],
     }
   },
   mounted() {
@@ -123,44 +128,39 @@ export default {
     }
   },
   setup() {
-    const text = ref('## hello,world \n' +
-      '#### DTTT\n' +
-      '\n' +
-      '### DTDDT\n' +
-      '\n' +
-      '## hello,world1\n' +
-      '\n' +
-      '### PPT \n' +
-      '\n' +
-      '### PTA\n' +
-      '\n' +
-      '#### AAA \n' +
-      '\n' +
-      '##### BBB \n' +
-      '\n' +
-      '## hello,world2\n' +
-      '\n' +
-      '#### TTT\n' +
-      '\n' +
-      '## hello,world3\n' +
-      '\n' +
-      '### OOO\n' +
-      '\n' +
-      '#### YYY\n' +
-      '\n' +
-      '## hello,world4\n' +
-      '#### TYYT\n' +
-      '## hello,world5\n' +
-      '## hello,world6\n' +
-      '## hello,world7\n' +
-      '## hello,world8\n' +
-      '## hello,world9\n' +
-      ' hello,world \n')
+    const article= ref({
+      articleName: '',
+      articleStatus: -1,
+      authorName: '',
+      avatar: '',
+      category: '',
+      content: '',
+      createTime: '',
+      lastTime: '',
+      description: '',
+      id: -1
+    })
+    const text = ref(article.value.content)
+    const store = useStore()
+    const route = useRoute()
 
-
+    onMounted(() => {
+      store.dispatch('fetchArticleById', route.params.id).then(
+        res => {
+          if (res) {
+            console.log(res)
+            article.value = res
+            text.value = article.value.content
+          } else {
+            console.log('article is null')
+          }
+        }
+      ).catch(err => console.log(err))
+    })
 
     return {
-      text
+      text,
+      article
     }
   }
 }

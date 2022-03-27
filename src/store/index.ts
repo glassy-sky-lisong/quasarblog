@@ -118,6 +118,19 @@ export default store(function (/* { ssrContext } */) {
             }
           ).catch(err => reject(err))
         })
+      },
+      fetchArticleById({}, id: number): Promise<PostProp | null> {
+        return new Promise((resolve, reject) => {
+          axios.get(`/api/article/id/${id}`).then(
+            res => {
+              if(res.data.data && res.data.data.id) {
+                resolve(res.data.data)
+              } else {
+                resolve(null)
+              }
+            }
+          ).catch(err => reject(err))
+        })
       }
     },
     // enable strict mode (adds overhead!)

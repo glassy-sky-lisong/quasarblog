@@ -68,7 +68,7 @@
           <change-shape-text
             style='position: absolute; top: 65%;width: 100%;'
             :texts='bgTexts'
-            distance='3'
+            :distance='3'
             color='white'
             :text-style='{ fontSize: "1.4rem", fontFamily: "cursive", fontWeight: "bold", color: "white" }'
           ></change-shape-text>

@@ -30,7 +30,7 @@
                 color="primary"
                 label="Click me"
                 type="a"
-                to="/article"
+                :to="'/article/' + post.id"
               >
 
               </q-btn>
