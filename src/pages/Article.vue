@@ -10,14 +10,8 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   name: 'Article',
   setup () {
-    const items = ref([{}, {}, {}, {}, {}, {}, {}])
-    const text = ref(`
-     [toc]
-      hello,world
-      ## hello,world
-    `)
+    const text = ref('')
     return {
-      items,
       text
     }
   }

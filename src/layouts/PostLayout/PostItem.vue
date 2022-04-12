@@ -11,7 +11,8 @@
           <div class="col-8 q-py-md q-px-lg">
             <div
               class="text-h5 text-center title-hidden q-mx-auto"
-              style="width: 90%;"
+              style="width: 90%; cursor: pointer;"
+              @click.prevent.stop='$router.push("/article/" + post.id)'
             >
               {{ post ? post.articleName : '' }}
             </div>
@@ -20,7 +21,7 @@
                 <q-chip icon="bookmark" size="xs" v-for='(item, index) in categories' :key='index' >{{ item }}</q-chip>
               </div>
             </template>
-            <p class="q-mt-xs text-hidden">
+            <p class="q-mt-xs text-hidden" style='height: 4em;'>
               {{ post ? post.description : '' }}
             </p>
             <q-card-section class="row justify-end q-py-none">
@@ -28,7 +29,7 @@
                 flat
                 rounded
                 color="primary"
-                label="Click me"
+                label="开始阅读"
                 type="a"
                 :to="'/article/' + post.id"
               >

@@ -1,4 +1,7 @@
 <template>
+  <post-list class="post-list">
+    <post-item v-for="(item, index) in viewPosts" :post='item' :key="index"></post-item>
+  </post-list>
   <div class='q-mt-lg q-pa-md flex justify-center' style='border-bottom:1px solid #ccc; width: 96%;'>
     <q-pagination
       v-model="current"
@@ -9,14 +12,6 @@
       size='lg'
     />
   </div>
-    <post-list class="post-list" style="max-height: 1000px; overflow: auto;">
-      <post-item v-for="(item, index) in viewPosts" :post='item' :key="index"></post-item>
-<!--      <template v-slot:loading>-->
-<!--        <div class="row justify-center q-my-md">-->
-<!--          <q-spinner-dots color="primary" size="40px" />-->
-<!--        </div>-->
-<!--      </template>-->
-    </post-list>
 
 </template>
 
